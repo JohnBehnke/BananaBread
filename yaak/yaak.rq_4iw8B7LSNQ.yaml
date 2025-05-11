@@ -1,0 +1,18 @@
+type: http_request
+model: http_request
+id: rq_4iw8B7LSNQ
+createdAt: 2025-05-11T18:35:02.700277
+updatedAt: 2025-05-11T18:35:16.715354
+workspaceId: wk_jdMHRaEZga
+folderId: null
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: Hello World
+sortPriority: -1746988600000.0
+url: ${[ HOST ]}:${[ PORT ]}
+urlParameters: []
