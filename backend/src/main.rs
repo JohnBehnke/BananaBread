@@ -3,6 +3,7 @@ use dotenv::dotenv;
 use sqlx::{migrate::MigrateDatabase, migrate::Migrator, Sqlite, SqlitePool};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
+static MIGRATOR: Migrator = sqlx::migrate!();
 #[tokio::main]
 async fn main() {
     tracing_subscriber::registry()
@@ -20,16 +21,41 @@ async fn main() {
         std::env::var("DATABASE_URL").unwrap_or_else(|_| "sqlite://banana_bread.db".to_string());
     let addr: String = format!("{}:{}", host, port);
 
-    if !Sqlite::database_exists(&*db_url).await.unwrap() {
+    if !Sqlite::database_exists(&db_url).await.unwrap() {
         match Sqlite::create_database(&db_url).await {
             Ok(_) => println!("Created database"),
             Err(e) => panic!("Failed to create database: {}", e),
         }
     }
+    let db = SqlitePool::connect(&db_url).await.unwrap();
+
+    run_migrations(&db).await;
 
     let app = Router::new().route("/", get(|| async { "Hello, World!" }));
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     tracing::debug!("Listening on {}", listener.local_addr().unwrap());
     axum::serve(listener, app).await.unwrap();
+}
+
+async fn run_migrations(db: &SqlitePool) {
+    let previous_migrations: Vec<i64> = sqlx::query_scalar("SELECT version FROM _sqlx_migrations")
+        .fetch_all(db)
+        .await
+        .unwrap_or_default();
+
+    MIGRATOR.run(db).await.unwrap();
+
+    let applied_migrations: Vec<(i64, String)> =
+        sqlx::query_as("SELECT version, description FROM _sqlx_migrations")
+            .fetch_all(db)
+            .await
+            .unwrap_or_default();
+
+    for (version, desc) in applied_migrations
+        .into_iter()
+        .filter(|(v, _)| !previous_migrations.contains(v))
+    {
+        tracing::info!("Applied migration {} ({})", version, desc);
+    }
 }
