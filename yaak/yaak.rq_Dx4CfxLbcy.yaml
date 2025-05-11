@@ -1,0 +1,26 @@
+type: http_request
+model: http_request
+id: rq_Dx4CfxLbcy
+createdAt: 2025-05-11T20:12:23.829436
+updatedAt: 2025-05-11T20:14:52.840405
+workspaceId: wk_jdMHRaEZga
+folderId: null
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: ''
+sortPriority: -1746988600000.0
+url: ${[ HOST ]}:${[ PORT ]}/media_count
+urlParameters:
+- enabled: true
+  name: dir
+  value: /Users/john/Desktop
+  id: g8hHbKeJqk
+- enabled: true
+  name: ''
+  value: ''
+  id: WGR3yUipef

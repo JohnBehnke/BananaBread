@@ -1,6 +1,9 @@
-use axum::{routing::get, Router};
+use axum::extract::Query;
+use axum::http::StatusCode;
+use axum::{routing::get, Json, Router};
 use dotenv::dotenv;
 use sqlx::{migrate::MigrateDatabase, migrate::Migrator, Sqlite, SqlitePool};
+use std::collections::HashMap;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 static MIGRATOR: Migrator = sqlx::migrate!();
@@ -31,7 +34,9 @@ async fn main() {
 
     run_migrations(&db).await;
 
-    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+    let app = Router::new()
+        .route("/", get(|| async { "Hello, World!" }))
+        .route("/media_count", get(get_media_for_dir));
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     tracing::debug!("Listening on {}", listener.local_addr().unwrap());
@@ -58,4 +63,28 @@ async fn run_migrations(db: &SqlitePool) {
     {
         tracing::info!("Applied migration {} ({})", version, desc);
     }
+}
+
+async fn get_media_for_dir(
+    Query(params): Query<HashMap<String, String>>,
+) -> Result<Json<usize>, StatusCode> {
+    let dir = if let Some(d) = params.get("dir") {
+        d.clone()
+    } else {
+        return Err(StatusCode::BAD_REQUEST);
+    };
+
+    let found_media = crawl_for_media(dir).await;
+    Ok(Json(found_media.len()))
+}
+
+async fn crawl_for_media(dir: String) -> Vec<Media> {
+    let media = vec![];
+    return media;
+}
+struct Media {
+    id: String,
+    name: String,
+    path: String,
+    alias: String,
 }
