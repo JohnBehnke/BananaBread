@@ -9,3 +9,4 @@ dotenv = "0.15.0"
 tokio = { version = "1.45.0", features = ["full"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 tracing = "0.1.41"
+sqlx = { version = "0.8.5", features = ["sqlite", "runtime-tokio-native-tls"] }
