@@ -1,0 +1,18 @@
+type: http_request
+model: http_request
+id: rq_B9GxWQimFj
+createdAt: 2025-05-11T22:50:25.984816
+updatedAt: 2025-05-12T00:05:12.549743
+workspaceId: wk_jdMHRaEZga
+folderId: null
+authentication: {}
+authenticationType: null
+body: {}
+bodyType: null
+description: ''
+headers: []
+method: GET
+name: Get Media Info
+sortPriority: -1746988600000.0
+url: ${[ HOST ]}:${[ PORT ]}/media/0019cb1d-2e58-4c99-b41a-011fffcd11db
+urlParameters: []

@@ -1,8 +1,8 @@
 type: http_request
 model: http_request
-id: rq_Dx4CfxLbcy
-createdAt: 2025-05-11T20:12:23.829436
-updatedAt: 2025-05-12T00:04:59.621908
+id: rq_35tqRwqUhX
+createdAt: 2025-05-11T23:46:04.570658
+updatedAt: 2025-05-12T00:05:20.470054
 workspaceId: wk_jdMHRaEZga
 folderId: null
 authentication: {}
@@ -10,7 +10,7 @@ authenticationType: null
 body:
   text: |-
     {
-      "dir": "/Users/john/Desktop"
+      "alias" : "bara"
     }
 bodyType: application/json
 description: ''
@@ -18,13 +18,9 @@ headers:
 - enabled: true
   name: Content-Type
   value: application/json
-  id: sDJSQEykzn
-method: POST
-name: Scan Directory
+  id: MAy8Q2qWkZ
+method: PATCH
+name: Add Alias for Media
 sortPriority: -1746988600000.0
-url: ${[ HOST ]}:${[ PORT ]}/media/dir
-urlParameters:
-- enabled: true
-  name: ''
-  value: ''
-  id: UMrtVhUuXW
+url: ${[ HOST ]}:${[ PORT ]}/media/00030230-e42d-4512-817e-1d551869c0ac
+urlParameters: []

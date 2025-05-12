@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE media SET alias = $1 WHERE id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 2
+    },
+    "nullable": []
+  },
+  "hash": "01e0ab85de63abf7fbc7fc4244c6e62d760258abf3b12cc012ed46e159f45ae5"
+}
